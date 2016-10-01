@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  driver: one
+  rating: MyString
+  description: MyString
+  location: one
+
+two:
+  driver: two
+  rating: MyString
+  description: MyString
+  location: two
