@@ -1,3 +1,5 @@
+#Just some test data used to populate the database for testing purposes
+
 driver1 = Driver.create(license_plate: "abc 1234")
 driver2 = Driver.create(license_plate: "abc 3456")
 driver3 = Driver.create(license_plate: "abc 6789")
