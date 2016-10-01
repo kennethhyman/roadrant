@@ -15,13 +15,7 @@ class DriversController < ApplicationController
 
   # POST /drivers
   def create
-    @driver = Driver.new(driver_params)
-
-    if @driver.save
-      render json: @driver, status: :created, location: @driver
-    else
-      render json: @driver.errors, status: :unprocessable_entity
-    end
+    render json: Driver.find_or_create_by(license_plate: driver_params[:license_plate])
   end
 
   # PATCH/PUT /drivers/1
