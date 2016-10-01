@@ -21,19 +21,19 @@ ActiveRecord::Schema.define(version: 20161001031935) do
   create_table "locations", force: :cascade do |t|
     t.decimal  "longitude",  precision: 9, scale: 6
     t.decimal  "latitude",   precision: 9, scale: 6
+    t.integer  "review_id"
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
+    t.index ["review_id"], name: "index_locations_on_review_id"
   end
 
   create_table "reviews", force: :cascade do |t|
     t.integer  "driver_id"
-    t.string   "rating"
+    t.boolean  "bad_driver"
     t.string   "description"
-    t.integer  "location_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["driver_id"], name: "index_reviews_on_driver_id"
-    t.index ["location_id"], name: "index_reviews_on_location_id"
   end
 
 end

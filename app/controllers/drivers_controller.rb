@@ -2,9 +2,10 @@ class DriversController < ApplicationController
   before_action :set_driver, only: [:show, :update, :destroy]
   # GET /drivers
   def index
-    @drivers = Driver.all
+    #Known bugs: Not returning any content other than a reference ID for the location
+    @drivers = Driver.includes(reviews: :location)
 
-    render json: @drivers #, include: 'reviews'
+    render json: @drivers
   end
 
   # GET /drivers/1
