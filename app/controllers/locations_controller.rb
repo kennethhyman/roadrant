@@ -18,6 +18,15 @@ class LocationsController < ApplicationController
     @location = Location.new(location_params)
 
     if @location.save
+      if @location.review.is_bad?
+        bucket = InitialState::Bucket.new 'qA5JfSLnp9UnpO2lfxlkV5Vh8YFhgOVr', '8BF5V777ESGB' # Bucket for bad drivers
+      else
+        bucket = InitialState::Bucket.new 'qA5JfSLnp9UnpO2lfxlkV5Vh8YFhgOVr', 'V49S45P4FGA5' # And good drivers
+      end
+
+      # Dump our data in InitialState for analysis
+      bucket.dump 'location', "#{@location.longitude.to_f},#{@location.latitude.to_f}"
+
       render json: @location, status: :created, location: @location
     else
       render json: @location.errors, status: :unprocessable_entity
