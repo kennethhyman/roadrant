@@ -35,7 +35,7 @@ class LocationsController < ApplicationController
       end
 
       # Dump our data in InitialState for analysis
-      bucket.dump('location', "#{@location.longitude.to_f},#{@location.latitude.to_f}")
+      bucket.dump('location', "#{@location.latitude.to_f},#{@location.longitude.to_f}")
 
       render json: @location, status: :created, location: @location
     else
