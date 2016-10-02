@@ -22,7 +22,7 @@ class SeedFaker
 		rand(36 ** length).to_s(36)
 	end
 	def fake_coords
-		{latitude: rand(35.950000000...40.000000000), longitude: rand(83.850000000...84.020000000)}
+				{latitude: rand(35.950000000...40.000000000), longitude: rand(-84.020000000...-83.850000000)}
 	end
 	def asshole_spoof
 		[true, true, true, true, true, false].sample
