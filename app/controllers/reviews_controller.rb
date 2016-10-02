@@ -18,6 +18,17 @@ class ReviewsController < ApplicationController
     @review = Review.new(review_params)
 
     if @review.save
+      lic_plate = @review.driver.license_plate.upcase.gsub(/\s+/, '')
+
+      user = Rails.application.secrets.yak_user
+      app = Rails.application.secrets.yak_app
+      secret = Rails.application.secrets.yak_secret
+
+      yikyak = YikYak.new user, app, secret
+
+      msg = @review.is_bad? ? "PissedOffBy#{lic_plate}" : "MadeMyDay#{lic_plate}"
+      yikyak.set_status msg
+
       render json: @review, status: :created, location: @review
     else
       render json: @review.errors, status: :unprocessable_entity
@@ -46,6 +57,6 @@ class ReviewsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def review_params
-      params.require(:review).permit(:driver_id, :rating, :description, :location_id)
+      params.require(:review).permit(:driver_id, :bad_driver, :description)
     end
 end
