@@ -18,14 +18,24 @@ class LocationsController < ApplicationController
     @location = Location.new(location_params)
 
     if @location.save
+
+      p Rails.application.secrets.is_bad_access, Rails.application.secrets.is_bad_bucket,
+        Rails.application.secrets.is_good_access, Rails.application.secrets.is_good_bucket
+
       if @location.review.is_bad?
-        bucket = InitialState::Bucket.new 'qA5JfSLnp9UnpO2lfxlkV5Vh8YFhgOVr', '8BF5V777ESGB' # Bucket for bad drivers
+        bucket = InitialState::Bucket.new(
+          Rails.application.secrets.is_bad_access,
+          Rails.application.secrets.is_bad_bucket
+        ) # Bucket for bad drivers
       else
-        bucket = InitialState::Bucket.new 'qA5JfSLnp9UnpO2lfxlkV5Vh8YFhgOVr', 'V49S45P4FGA5' # And good drivers
+        bucket = InitialState::Bucket.new(
+          Rails.application.secrets.is_good_access,
+          Rails.application.secrets.is_good_bucket
+        ) # And good drivers
       end
 
       # Dump our data in InitialState for analysis
-      bucket.dump 'location', "#{@location.longitude.to_f},#{@location.latitude.to_f}"
+      bucket.dump('location', "#{@location.longitude.to_f},#{@location.latitude.to_f}")
 
       render json: @location, status: :created, location: @location
     else
