@@ -22,3 +22,7 @@
 
 # Ignore Gemfile.lock
 Gemfile.lock
+
+# Production stuff
+.rbenv-vars
+shared/*
